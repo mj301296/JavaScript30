@@ -60,6 +60,23 @@
 
 <script>
 
+const keys = document.querySelectorAll('.key')
+keys.forEach(element => element.addEventListener('transitionend', function(r){
+  if(r.propertyName !== 'transform') return
+  r.target.classList.remove('playing')
+}))
+
+window.addEventListener('keydown', function(e){
+ // console.log(e)
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`) 
+  const key = document.querySelector(`div[data-key="${e.keyCode}"]`) 
+  if(!audio) return;
+  
+  key.classList.add('playing')
+  audio.currentTime = 0;
+  audio.play();
+})
+
 </script>
 
 
