@@ -17,11 +17,34 @@
 
     <label for="base">Base Color</label>
     <input id="base" type="color" name="base" value="#ffc600">
+
+    <label for="Reset">Reset</label>
+    <input id="reset" type="button" name="reset" value="Reset">
+
+
   </div>
 
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+
+    :root{
+      --base : #ffc600;
+      --blur : 25px;
+      --spacing: 10px;
+    }
+
+
+    img{
+      padding: var(--spacing);
+      background-color: var(--base);
+      filter: blur(var(--blur))
+    }
+
+    .hl{
+      color: var(--base)
+
+    }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -46,6 +69,27 @@
   </style>
 
   <script>
+
+    const input = document.querySelectorAll('.controls input')
+
+    function updatePage(){
+      console.log(this.name)
+      if(this.name != 'reset')
+      {
+      suffix = this.dataset.sizing || ''
+      document.documentElement.style.setProperty(`--${this.name}`,this.value+ suffix);
+      }
+      else{
+        console.log("reset")
+        document.documentElement.style.setProperty(`--base`, '#ffc600');
+        document.documentElement.style.setProperty(`--blur`, '25px');
+        document.documentElement.style.setProperty(`--spacing`, '10px');
+      }
+
+
+    }
+    input.forEach(inputs => inputs.addEventListener('click', updatePage));
+    input.forEach(inputs => inputs.addEventListener('input', updatePage))
   </script>
 
 </body>
