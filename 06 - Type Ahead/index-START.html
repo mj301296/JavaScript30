@@ -17,6 +17,40 @@
   </form>
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+let cities= []
+fetch(endpoint).then(element => element.json()).then(data=> cities.push(...data))
+console.log(cities)
+
+
+function findMatch(word, cities){return cities.filter(element =>{
+  const matching = new RegExp(word, 'gi');
+  return element.city.match(matching) || element.state.match(matching) ;
+})
+}
+
+function display(){
+  console.log(this.value)
+  const matchData = findMatch(this.value, cities)
+  const add = matchData.map(place => {
+    const highlight = new RegExp(this.value, 'gi')
+    const cityName = place.city.replace(highlight,`<span class=hl>${this.value}</span>`)
+    const stateName = place.state.replace(highlight,`<span class=hl>${this.value}</span>`)
+    return `
+    <li>
+      <span class= "name">${cityName}, ${stateName}</span>
+      <span class="population">${place.population}</span>
+    </li>
+    `;
+  }).join('');
+  suggest.innerHTML = add;
+
+console.log(matchData);
+}
+const hit = document.querySelector('.search');
+const suggest = document.querySelector('.suggestions');
+
+hit.addEventListener('change', display);
+hit.addEventListener('keyup', display);
 
 </script>
 </body>
