@@ -7,6 +7,19 @@
     <link rel="icon" href="https://fav.farm/🔥" />
   </head>
   <body>
-    <script></script>
+    <script>
+
+      let pressed = [];
+      const code ="abcd";
+      window.addEventListener('keyup', (e)=> {
+        pressed.push(e .key);
+        pressed.splice(0, pressed.length - code.length)
+        console.log(pressed)
+        if(pressed.join("").includes(code))
+        {
+          console.log("Match")
+        }
+      })
+    </script>
   </body>
 </html>
